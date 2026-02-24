@@ -6,7 +6,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://harmonyhomeo.netlify.app"],
     credentials: true,
   }),
 );
@@ -16,13 +16,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "medbuddy-secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // localhost only
-      httpOnly: true,
-      sameSite: "lax", // 👈 IMPORTANT
+      secure: true,
+      sameSite: "none",
     },
   }),
 );

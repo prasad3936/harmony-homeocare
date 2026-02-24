@@ -21,7 +21,7 @@ export default function PatientPage() {
 
   // 🔥 Fetch slots from backend (Flask API)
   useEffect(() => {
-    fetch("http://localhost:5000/api/patient/slots") // change later
+    fetch("process.env.NEXT_PUBLIC_API_URL/api/patient/slots") // change later
       .then((res) => res.json())
       .then((data) => setSlots(data))
       .catch((err) => console.error(err));
@@ -30,7 +30,7 @@ export default function PatientPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5000/api/patient/book", {
+    const response = await fetch("process.env.NEXT_PUBLIC_API_URL/api/patient/book", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
