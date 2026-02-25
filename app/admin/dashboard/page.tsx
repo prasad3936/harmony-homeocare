@@ -80,7 +80,7 @@ export default function AdminDashboard() {
   /* ================= LOAD ================= */
 
   async function loadDashboard() {
-    const res = await fetch("process.env.NEXT_PUBLIC_API_URL/api/admin/dashboard", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/dashboard`, {
       credentials: "include",
     });
 
@@ -101,6 +101,7 @@ export default function AdminDashboard() {
     loadDashboard();
   }, []);
 
+
   /* ================= FILTER LOGIC ================= */
 
   const filteredAppointments = appointments.filter((a) => {
@@ -116,7 +117,7 @@ export default function AdminDashboard() {
   /* ================= ACTIONS ================= */
 
   async function updateStatus(id: number, status: string) {
-    await fetch(`process.env.NEXT_PUBLIC_API_URL/api/admin/update/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/update/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -126,7 +127,7 @@ export default function AdminDashboard() {
   }
 
   async function updateMeeting(id: number, meeting: string) {
-    await fetch(`process.env.NEXT_PUBLIC_API_URL/api/admin/update/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/update/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -137,7 +138,7 @@ export default function AdminDashboard() {
 
   async function sendReminder(id: number) {
     const res = await fetch(
-      `process.env.NEXT_PUBLIC_API_URL/api/admin/send-reminder/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}}/api/admin/send-reminder/${id}`,
       { method: "POST", credentials: "include" },
     );
     const data = await res.json();
@@ -149,7 +150,7 @@ export default function AdminDashboard() {
     const form = e.currentTarget;
     const fd = new FormData(form);
 
-    await fetch("process.env.NEXT_PUBLIC_API_URL/api/admin/add-slot", {
+    await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/admin/add-slot", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -165,7 +166,7 @@ export default function AdminDashboard() {
   }
 
   async function deleteSlot(id: number) {
-    await fetch(`process.env.NEXT_PUBLIC_API_URL/api/admin/delete-slot/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/delete-slot/${id},`, {
       method: "POST",
       credentials: "include",
     });
@@ -173,16 +174,17 @@ export default function AdminDashboard() {
   }
 
   async function saveSettings() {
-    await fetch("process.env.NEXT_PUBLIC_API_URL/api/admin/update-settings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(settings),
-    });
-    setShowSettings(false);
-    loadDashboard();
+  await fetch(
+  `${process.env.NEXT_PUBLIC_API_URL}/api/admin/update-settings`,
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(settings),
   }
-
+  );
+  setShowSettings(false);
+  loadDashboard();
   /* ================= CALENDAR ================= */
 
   function nextMonth() {
@@ -489,4 +491,4 @@ function Stat({ label, value }: any) {
       <h2 className="text-2xl font-bold">{value}</h2>
     </div>
   );
-}
+}}

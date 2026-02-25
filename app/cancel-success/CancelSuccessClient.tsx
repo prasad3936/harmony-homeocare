@@ -12,10 +12,7 @@ export default function CancelSuccessClient() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-slate-50">
       <div className="bg-white p-10 rounded-3xl shadow-xl text-center">
-
-        <h1 className="text-3xl font-bold mb-4">
-          Appointment Cancelled
-        </h1>
+        <h1 className="text-3xl font-bold mb-4">Appointment Cancelled</h1>
 
         <p className="mb-6">
           Appointment <b>{code}</b> cancelled successfully.
@@ -31,13 +28,9 @@ export default function CancelSuccessClient() {
           </a>
         )}
 
-        <Link
-          href="/"
-          className="bg-slate-800 text-white px-6 py-3 rounded-xl"
-        >
+        <Link href="/" className="bg-slate-800 text-white px-6 py-3 rounded-xl">
           Go Home
         </Link>
-
       </div>
     </main>
   );

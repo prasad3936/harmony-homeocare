@@ -20,7 +20,7 @@ export default function HistoryPage() {
     setLoading(true);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/history/${mobile}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/history/${mobile}`);
 
       if (!res.ok) throw new Error("Failed to fetch");
 
@@ -39,7 +39,7 @@ export default function HistoryPage() {
 
     try {
       // ✅ Correct backend route (based on our Express setup)
-      await fetch(`http://localhost:5000/api/status/cancel/${code}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/status/cancel/${code}`, {
         method: "POST",
       });
 
@@ -121,7 +121,7 @@ export default function HistoryPage() {
                 <div className="flex gap-4 mt-4 flex-wrap">
                   {/* ✅ Correct PDF route */}
                   <a
-                    href={`http://localhost:5000/api/pdf/${a.confirmation_code}`}
+                    href={`${process.env.NEXT_PUBLIC_API_URL}/api/pdf/${a.confirmation_code}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-teal-700 text-sm font-medium hover:underline"

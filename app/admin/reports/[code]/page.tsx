@@ -17,7 +17,7 @@ export default function AdminReportsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/admin/reports/${code}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/reports/${code}`)
       .then((res) => res.json())
       .then((data) => {
         setReports(data);
@@ -60,7 +60,7 @@ export default function AdminReportsPage() {
                   </div>
 
                   <a
-                    href={`http://localhost:5000/${r.file_path}`}
+                    href={`${process.env.NEXT_PUBLIC_API_URL}/${r.file_path}`}
                     target="_blank"
                     className="bg-teal-700 text-white px-4 py-2 rounded-lg text-sm hover:bg-teal-800 transition"
                   >

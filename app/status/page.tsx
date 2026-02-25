@@ -21,7 +21,7 @@ export default function StatusPage() {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch(`http://localhost:5000/api/status/${code}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/status/${code}`);
     const data = await res.json();
 
     setAppointment(data);
@@ -32,7 +32,7 @@ export default function StatusPage() {
     if (!confirm("Are you sure you want to cancel this appointment?")) return;
 
     await fetch(
-      `http://localhost:5000/api/cancel/${appointment?.confirmation_code}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cancel/${appointment?.confirmation_code}`,
       { method: "POST" },
     );
 
@@ -161,7 +161,7 @@ export default function StatusPage() {
                   </div>
 
                   <a
-                    href={`http://localhost:5000/appointment/pdf/${appointment.confirmation_code}`}
+                    href={`${process.env.NEXT_PUBLIC_API_URL}/appointment/pdf/${appointment.confirmation_code}`}
                     target="_blank"
                     className="inline-block bg-teal-700 text-white px-6 py-2 rounded-xl hover:bg-teal-800 transition"
                   >
