@@ -7,20 +7,27 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "https://harmonyhomeo.netlify.app",
+  "https://harmony-homeocare.netlify.app",
 ];
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, origin);
       }
+
+      console.log("Blocked CORS:", origin);
+
+      return callback(null, false); // ✅ DO NOT THROW ERROR
     },
     credentials: true,
   }),
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
