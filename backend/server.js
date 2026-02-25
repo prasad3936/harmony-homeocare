@@ -14,10 +14,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const express = require("express");
-const session = require("express-session");
 
-//const app = express();
+
+
+
 
 /* VERY IMPORTANT FOR RENDER */
 app.set("trust proxy", 1);
