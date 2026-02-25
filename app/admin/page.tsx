@@ -15,23 +15,17 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        },
-      );
-
-      if (!res.ok) {
-        alert("Invalid credentials");
-        setLoading(false);
-        return;
-      }
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+  });
 
       router.push("/admin/dashboard");
     } catch (err) {

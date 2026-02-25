@@ -4,57 +4,85 @@ const session = require("express-session");
 
 const app = express();
 
+/* =============================
+   ALLOWED FRONTENDS
+============================= */
+
 const allowedOrigins = [
   "http://localhost:3000",
   "https://harmonyhomeo.netlify.app",
   "https://harmony-homeocare.netlify.app",
 ];
 
+/* =============================
+   CORS
+============================= */
+
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: function (origin, callback) {
+      // allow server tools / curl
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
-        return callback(null, origin);
+        return callback(null, true);
       }
 
       console.log("Blocked CORS:", origin);
-
-      return callback(null, false); // ✅ DO NOT THROW ERROR
+      return callback(null, false);
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
   }),
 );
 
-app.options("*", cors());
+/* VERY IMPORTANT */
+//app.options("*", cors());
+
+/* =============================
+   BODY PARSER
+============================= */
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+/* =============================
+   TRUST RENDER PROXY
+============================= */
 
-
-
-
-
-/* VERY IMPORTANT FOR RENDER */
 app.set("trust proxy", 1);
+
+/* =============================
+   SESSION
+============================= */
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    name: "harmony.sid", // ⭐ important
+    secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     saveUninitialized: false,
-    proxy: true, // ⭐ IMPORTANT
+    proxy: true,
+
     cookie: {
-      secure: true,
-      sameSite: "none",
+      secure: true, // HTTPS required
+      sameSite: "none", // Netlify → Render
       httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 8, // 8 hours
     },
   }),
 );
 
+/* =============================
+   STATIC
+============================= */
+
 app.use("/uploads", express.static("uploads"));
+
+/* =============================
+   ROUTES
+============================= */
 
 app.use("/api/patient", require("./routes/patient"));
 app.use("/api/status", require("./routes/status"));
@@ -63,9 +91,22 @@ app.use("/api/upload", require("./routes/upload"));
 app.use("/api/pdf", require("./routes/pdf"));
 app.use("/api/admin", require("./routes/admin"));
 
-
 require("./scheduler");
 
-app.listen(5000, () => {
-  console.log("Backend running on port 5000");
+/* =============================
+   HEALTH CHECK
+============================= */
+
+app.get("/", (req, res) => {
+  res.send("Harmony Backend Running ✅");
+});
+
+/* =============================
+   START
+============================= */
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log("Backend running on port", PORT);
 });
