@@ -4,9 +4,20 @@ const session = require("express-session");
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://harmonyhomeo.netlify.app",
+];
+
 app.use(
   cors({
-    origin: "https://harmony-homeocare.netlify.app",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
