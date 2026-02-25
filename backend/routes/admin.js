@@ -23,14 +23,14 @@ router.post("/login", (req, res) => {
   if (username === "admin" && password === "admin123") {
     req.session.admin = true;
 
-req.session.save((err) => {
-  if (err) {
-    console.log(err);
-    return res.status(500).json({ error: "Session save failed" });
-  }
+    req.session.save((err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Session save failed" });
+      }
 
-  res.json({ success: true });
-});
+      res.json({ success: true });
+    });
   }
 
   res.status(401).json({ error: "Invalid credentials" });
