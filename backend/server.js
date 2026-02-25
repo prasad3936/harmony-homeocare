@@ -6,13 +6,21 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://harmonyhomeo.netlify.app"],
+    origin: "https://harmony-homeocare.netlify.app",
     credentials: true,
   }),
 );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const express = require("express");
+const session = require("express-session");
+
+//const app = express();
+
+/* VERY IMPORTANT FOR RENDER */
+app.set("trust proxy", 1);
 
 app.use(
   session({

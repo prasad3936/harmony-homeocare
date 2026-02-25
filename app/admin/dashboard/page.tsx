@@ -150,7 +150,7 @@ export default function AdminDashboard() {
     const form = e.currentTarget;
     const fd = new FormData(form);
 
-    await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/admin/add-slot", {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/add-slot`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
