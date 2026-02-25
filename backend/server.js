@@ -38,6 +38,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    proxy: true, // ⭐ IMPORTANT
     cookie: {
       secure: true,
       sameSite: "none",
